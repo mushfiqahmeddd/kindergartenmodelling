@@ -1,5 +1,3 @@
-# kindergartenmodelling
-
 # Kindergarten Achievement Prediction Modelling
 **Predicting student reading and math outcomes using the Project STAR dataset.**
 
