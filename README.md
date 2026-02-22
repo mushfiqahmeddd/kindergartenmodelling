@@ -1,46 +1,61 @@
 # kindergartenmodelling
 
-Kindergarten Achievement Prediction Modelling
+# Kindergarten Achievement Prediction Modelling
+**Predicting student reading and math outcomes using the Project STAR dataset.**
 
-This project builds predictive models to estimate kindergarten students’ reading and mathematics test scores using demographic, classroom, and teacher-related variables. The dataset is inspired by Tennessee’s Project STAR experiment on class size and student outcomes.
+---
 
-Objective
+## Project Overview
+This project builds a multi-output machine learning pipeline to estimate kindergarten students’ academic performance. Using data inspired by Tennessee’s **Project STAR** experiment, the analysis explores how classroom environments, teacher experience, and student demographics influence early childhood literacy and numeracy.
 
-The goal was to compare multiple statistical and machine learning models and identify which approach best predicts student performance while examining the trade-off between interpretability and predictive accuracy.
+The core challenge was to move beyond simple linear relationships and evaluate whether non-linear machine learning models could significantly improve prediction accuracy over traditional statistical baselines.
 
-Dataset
+---
 
-~5,000 student observations
+## The Dataset
+The model is trained on approximately **5,000 student records**. 
 
-Features include class type, lunch status, teacher experience, school identifiers, demographics, and birth quarter
+* **Target Variables:** Reading Score and Math Score (Multi-output regression).
+* **Key Features:** * **Classroom:** Class type (small vs. regular), school identifier.
+    * **Teacher:** Years of experience, degree level.
+    * **Student:** Gender, birth quarter, lunch status (socioeconomic proxy).
 
-Target variables: reading score and math score
+---
 
-Methods
+## Technical Workflow
 
-Exploratory Data Analysis (EDA) to understand distributions, correlations, and missing data
+### 1. Exploratory Data Analysis (EDA)
+Identified key correlations between socioeconomic status (lunch status) and test scores. Handled significant missingness in teacher-related variables using median and categorical imputation.
 
-Data preprocessing including imputation and categorical encoding
+### 2. Feature Engineering & Preprocessing
+* **Encoding:** Applied One-Hot Encoding to categorical variables (School ID, Class Type).
+* **Scaling:** Standardized numerical features for linear and neural network models.
+* **Multi-Output Wrapper:** Leveraged `scikit-learn`'s `MultiOutputRegressor` to predict both reading and math scores simultaneously.
 
-Multi-output prediction framework implemented in Python using scikit-learn
+### 3. Model Selection & Evaluation
+Models were evaluated using **5-Fold Cross-Validation** to ensure generalizability. The Mean Squared Error (MSE) was the primary metric for comparison.
 
-Models evaluated using 5-fold cross-validation with mean squared error metric
+| Model Category | Algorithms Evaluated |
+| :--- | :--- |
+| **Baselines** | OLS Linear Regression |
+| **Regularized** | Ridge, Lasso, Elastic Net |
+| **Ensembles** | Random Forest, **Gradient Boosting (Winner)** |
+| **Deep Learning** | Multi-Layer Perceptron (MLP) |
 
-Models compared:
+---
 
-Ordinary Least Squares
+## Key Results
+* **Best Model:** **Gradient Boosting Regressor** achieved the lowest Mean Squared Error.
+* **Performance:** Achieved a **~17% reduction in prediction error** compared to the OLS baseline.
+* **Feature Importance:** The most influential predictors of student success were **School Identifiers**, **Birth Quarter**, and **Teacher Experience**.
 
-Ridge / Lasso / Elastic Net
 
-Random Forest
+---
 
-Gradient Boosting Regressor
-
-Multi-Layer Perceptron (Neural Network)
-
-Results
-
-Gradient Boosting Regressor achieved the lowest prediction error
+## 🧰 Tools Used
+* **Language:** Python 3.x
+* **Libraries:** `pandas`, `numpy`, `scikit-learn`, `matplotlib`, `seaborn`
+* **Environment:** Jupyter Notebook
 
 ~17% improvement over the baseline linear regression model
 
